@@ -1,0 +1,40 @@
+package br.com.k19.android.cap05;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by Edi Carlos on 04/03/2017.
+ */
+
+public class AddNameActivity extends Activity {
+
+    private SharedPreferences prefs;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_name);
+
+        prefs = getSharedPreferences(MainActivity.APP_PREFS, MODE_PRIVATE);
+
+        final EditText name = (EditText) findViewById(R.id.name_edit_text);
+        Button saveButton = (Button) findViewById(R.id.add_name_button);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = name.getEditableText().toString();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(MainActivity.USERNAME_KEY, username);
+                editor.commit();
+                finish();
+            }
+        });
+    }
+
+}
